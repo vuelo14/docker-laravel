@@ -56,6 +56,9 @@ RUN docker-php-ext-install -j$(nproc) \
 # Konfigurasi Apache (opsional, untuk mengaktifkan mod_rewrite)
 RUN a2enmod rewrite
 
+# Install Composer
+#COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 # Konfigurasi PHP (opsional: untuk meningkatkan batas memori, dll.)
 # Anda bisa membuat php.ini kustom dan meng-copy-nya
 # COPY php.ini-production /usr/local/etc/php/php.ini

@@ -1,0 +1,35 @@
+services:
+  web:
+    build:
+      context: ./apache # Path ke Dockerfile untuk layanan web
+      dockerfile: Dockerfile
+    container_name: php-apache-web
+    ports:
+      - "80:80" # Mapping port host ke port container
+    volumes:
+      - ./src:/var/www/html # Mount folder kode sumber Anda
+      - ./apache/000-default.conf:/etc/apache2/sites-enabled/000-default.conf # Mount konfigurasi Apache
+    depends_on:
+      - db # Layanan web bergantung pada layanan database
+    environment:
+      # Variabel lingkungan untuk PHP (misalnya untuk koneksi database)
+      - DB_HOST=db
+      - DB_NAME=${MYSQL_DATABASE}
+      - DB_USER=${MYSQL_USER}
+      - DB_PASSWORD=${MYSQL_PASSWORD}
+
+  db:
+    image: mariadb:latest # Menggunakan MariaDB versi 10.11
+    container_name: php-apache-db
+    ports:
+      - "3306:3306" # Opsional: mapping port database ke host
+    volumes:
+      - ./db:/var/lib/mysql # Persistent storage untuk data database
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+volumes:
+  db_data: # Definisi volume untuk data database

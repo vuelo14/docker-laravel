@@ -1,1 +1,6 @@
+Langkah Build Image Docker
+Buka terminal di direktori yang sama dengan Dockerfile Anda, lalu jalankan perintah:
 
+docker build -t nama-image:versi .
+
+Selanjutnya jalankan image dengan container lewat docker compose

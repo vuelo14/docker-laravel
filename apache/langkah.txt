@@ -4,3 +4,13 @@ Buka terminal di direktori yang sama dengan Dockerfile Anda, lalu jalankan perin
 docker build -t nama-image:versi .
 
 Selanjutnya jalankan image dengan container lewat docker compose
+
+Ganti Akses Owner Storage
+sudo chown -R www-data:www-data storage
+
+atau 
+sudo chown -R apache:apache storage
+
+ganti hak akses
+sudo find storage -type d -exec chmod 775 {} \;
+sudo find storage -type f -exec chmod 664 {} \;
